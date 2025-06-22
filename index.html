@@ -1,0 +1,1567 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WebLinks.space - Your Ultimate Web Navigation Portal</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
+    
+    <!-- Tailwind CSS Configuration -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#165DFF',
+                        secondary: '#4080FF',
+                        light: '#E8F3FF',
+                        dark: '#0E42D2',
+                        neutral: {
+                            100: '#F5F7FA',
+                            200: '#E5E6EB',
+                            300: '#C9CDD4',
+                            400: '#86909C',
+                            500: '#4E5969',
+                            600: '#272E3B',
+                            700: '#1D2129',
+                        }
+                    },
+                    fontFamily: {
+                        inter: ['Inter', 'sans-serif'],
+                    },
+                    animation: {
+                        'bounce-slow': 'bounce 3s infinite',
+                        'bounce-medium': 'bounce 2s infinite',
+                        'bounce-fast': 'bounce 1s infinite',
+                    }
+                },
+            }
+        }
+    </script>
+    
+    <style type="text/tailwindcss">
+        @layer utilities {
+            .content-auto {
+                content-visibility: auto;
+            }
+            .card-shadow {
+                box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            }
+            .nav-item-active {
+                @apply text-primary border-b-2 border-primary;
+            }
+            .site-card-hover {
+                @apply transition-all duration-300 hover:shadow-lg hover:-translate-y-1;
+            }
+            .animate-delay-100 {
+                animation-delay: 100ms;
+            }
+            .animate-delay-200 {
+                animation-delay: 200ms;
+            }
+            .animate-delay-300 {
+                animation-delay: 300ms;
+            }
+            .animate-delay-400 {
+                animation-delay: 400ms;
+            }
+            .animate-delay-500 {
+                animation-delay: 500ms;
+            }
+            .scroll-smooth {
+                scroll-behavior: smooth;
+            }
+            .sticky-top {
+                position: sticky;
+                top: 0;
+                z-index: 40;
+            }
+            .search-category-container {
+                position: sticky;
+                top: 72px;
+                z-index: 30;
+                background-color: white;
+                padding-top: 1rem;
+                padding-bottom: 1rem;
+            }
+        }
+    </style>
+</head>
+<body class="bg-light font-inter text-neutral-700 min-h-screen flex flex-col scroll-smooth">
+    <!-- Login Modal -->
+    <div id="loginModal" class="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center hidden">
+        <div class="bg-white rounded-xl p-8 w-full max-w-md shadow-2xl transform transition-all">
+            <div class="text-center mb-6">
+                <h2 class="text-2xl font-bold text-neutral-700">Welcome Back</h2>
+                <p class="text-neutral-500 mt-2">Sign in to access premium features</p>
+            </div>
+            
+            <div class="space-y-4">
+                <div>
+                    <label class="block text-sm font-medium text-neutral-700 mb-1">Email address</label>
+                    <input type="email" class="w-full px-4 py-2 border border-neutral-300 rounded-lg focus:ring-2 focus:ring-primary/50 focus:border-primary outline-none transition" placeholder="your@email.com">
+                </div>
+                
+                <div>
+                    <div class="flex justify-between items-center mb-1">
+                        <label class="block text-sm font-medium text-neutral-700">Password</label>
+                        <a href="#" class="text-xs text-primary hover:underline">Forgot password?</a>
+                    </div>
+                    <input type="password" class="w-full px-4 py-2 border border-neutral-300 rounded-lg focus:ring-2 focus:ring-primary/50 focus:border-primary outline-none transition" placeholder="••••••••">
+                </div>
+                
+                <div class="flex items-center">
+                    <input type="checkbox" id="remember" class="w-4 h-4 text-primary focus:ring-primary border-neutral-300 rounded">
+                    <label for="remember" class="ml-2 block text-sm text-neutral-600">Remember me</label>
+                </div>
+                
+                <button class="w-full bg-primary hover:bg-dark text-white font-medium py-2.5 px-4 rounded-lg transition-colors duration-300">
+                    Sign in
+                </button>
+                
+                <div class="relative flex items-center my-4">
+                    <div class="flex-grow border-t border-neutral-200"></div>
+                    <span class="flex-shrink mx-4 text-neutral-400 text-sm">Or continue with</span>
+                    <div class="flex-grow border-t border-neutral-200"></div>
+                </div>
+                
+                <div class="grid grid-cols-2 gap-3">
+                    <button class="flex items-center justify-center py-2 border border-neutral-300 rounded-lg text-neutral-700 hover:bg-neutral-100 transition-colors">
+                        <i class="fa fa-google mr-2 text-red-500"></i> Google
+                    </button>
+                    <button class="flex items-center justify-center py-2 border border-neutral-300 rounded-lg text-neutral-700 hover:bg-neutral-100 transition-colors">
+                        <i class="fa fa-github mr-2 text-neutral-700"></i> GitHub
+                    </button>
+                </div>
+                
+                <p class="text-center text-sm text-neutral-600 mt-4">
+                    Don't have an account? <a href="#" class="text-primary hover:underline">Sign up</a>
+                </p>
+            </div>
+            
+            <button id="closeLoginModal" class="absolute top-4 right-4 text-neutral-400 hover:text-neutral-600">
+                <i class="fa fa-times"></i>
+            </button>
+        </div>
+    </div>
+    
+    <!-- Comment Modal -->
+    <div id="commentModal" class="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center hidden">
+        <div class="bg-white rounded-xl p-6 w-full max-w-lg shadow-2xl transform transition-all">
+            <div class="flex justify-between items-center mb-4">
+                <h3 class="text-xl font-bold text-neutral-700">Leave a Comment</h3>
+                <button id="closeCommentModal" class="text-neutral-400 hover:text-neutral-600">
+                    <i class="fa fa-times"></i>
+                </button>
+            </div>
+            
+            <div class="space-y-4">
+                <div>
+                    <label class="block text-sm font-medium text-neutral-700 mb-1">Your Rating</label>
+                    <div class="flex text-yellow-400">
+                        <i class="fa fa-star cursor-pointer hover:text-yellow-500"></i>
+                        <i class="fa fa-star cursor-pointer hover:text-yellow-500"></i>
+                        <i class="fa fa-star cursor-pointer hover:text-yellow-500"></i>
+                        <i class="fa fa-star cursor-pointer hover:text-yellow-500"></i>
+                        <i class="fa fa-star cursor-pointer hover:text-yellow-500"></i>
+                    </div>
+                </div>
+                
+                <div>
+                    <label class="block text-sm font-medium text-neutral-700 mb-1">Comment</label>
+                    <textarea rows="4" class="w-full px-4 py-2 border border-neutral-300 rounded-lg focus:ring-2 focus:ring-primary/50 focus:border-primary outline-none transition" placeholder="Share your thoughts about this website..."></textarea>
+                </div>
+                
+                <button class="w-full bg-primary hover:bg-dark text-white font-medium py-2.5 px-4 rounded-lg transition-colors duration-300">
+                    Submit Review
+                </button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Header -->
+    <header class="bg-white shadow-sm sticky-top">
+        <div class="container mx-auto px-4 py-4 flex flex-col md:flex-row items-center justify-between">
+            <div class="flex items-center justify-between w-full md:w-auto">
+                <a href="#" class="flex items-center space-x-2">
+                    <div class="bg-primary text-white p-2 rounded-lg">
+                        <i class="fa fa-link text-xl"></i>
+                    </div>
+                    <span class="text-xl font-bold text-neutral-700">WebLinks<span class="text-primary">.space</span></span>
+                </a>
+                
+                <button id="mobileMenuButton" class="md:hidden text-neutral-700 hover:text-primary">
+                    <i class="fa fa-bars text-xl"></i>
+                </button>
+            </div>
+            
+            <!-- Search Bar -->
+            <div class="w-full md:w-auto mt-4 md:mt-0 md:ml-6 flex-grow max-w-xl">
+                <div class="relative">
+                    <input type="text" placeholder="Search websites..." class="w-full pl-10 pr-4 py-2 border border-neutral-300 rounded-lg focus:ring-2 focus:ring-primary/50 focus:border-primary outline-none transition">
+                    <i class="fa fa-search absolute left-3 top-1/2 transform -translate-y-1/2 text-neutral-400"></i>
+                </div>
+            </div>
+            
+            <!-- Navigation -->
+            <nav class="hidden md:flex items-center space-x-6 mt-4 md:mt-0">
+                <a href="#" class="nav-item-active font-medium">Home</a>
+                <button id="loginButton" class="bg-primary hover:bg-dark text-white font-medium py-2 px-4 rounded-lg transition-colors duration-300">
+                    Login
+                </button>
+            </nav>
+        </div>
+        
+        <!-- Mobile Navigation -->
+        <div id="mobileMenu" class="hidden md:hidden bg-white border-t border-neutral-200 py-4 px-4 space-y-3">
+            <a href="#" class="block py-2 text-primary font-medium">Home</a>
+            <button id="mobileLoginButton" class="w-full bg-primary hover:bg-dark text-white font-medium py-2 px-4 rounded-lg transition-colors duration-300">
+                Login
+            </button>
+        </div>
+    </header>
+    
+    <!-- Categories and Search Section -->
+    <div class="search-category-container">
+        <div class="container mx-auto px-4">
+            <!-- Categories Navigation -->
+            <div class="mb-4 overflow-x-auto scrollbar-hide">
+                <div class="flex space-x-4 py-2 min-w-max">
+                    <button class="category-btn bg-primary text-white px-5 py-2 rounded-full font-medium" data-category="all">All</button>
+                    <button class="category-btn bg-white text-neutral-700 hover:bg-neutral-100 px-5 py-2 rounded-full font-medium transition-colors" data-category="e-commerce">E-commerce</button>
+                    <button class="category-btn bg-white text-neutral-700 hover:bg-neutral-100 px-5 py-2 rounded-full font-medium transition-colors" data-category="ai">AI</button>
+                    <button class="category-btn bg-white text-neutral-700 hover:bg-neutral-100 px-5 py-2 rounded-full font-medium transition-colors" data-category="browsers">Browsers</button>
+                    <button class="category-btn bg-white text-neutral-700 hover:bg-neutral-100 px-5 py-2 rounded-full font-medium transition-colors" data-category="games">Games</button>
+                    <button class="category-btn bg-white text-neutral-700 hover:bg-neutral-100 px-5 py-2 rounded-full font-medium transition-colors" data-category="maps">Map Navigation</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Main Content -->
+    <main class="flex-grow container mx-auto px-4 py-4 pt-0">
+        <!-- Categories Section -->
+        <section class="space-y-12 pt-4">
+            <!-- E-commerce Category -->
+            <div id="e-commerce" class="category-section" data-category="e-commerce">
+                <h2 class="text-2xl font-bold text-neutral-700 mb-6 flex items-center">
+                    <i class="fa fa-shopping-cart text-primary mr-2"></i> E-commerce
+                </h2>
+                
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <!-- Site Card 1 -->
+                    <div class="bg-white rounded-xl overflow-hidden card-shadow site-card-hover">
+                        <div class="p-5">
+                            <div class="flex items-start">
+                                <div class="flex-shrink-0 mr-4">
+                                    <a href="https://www.taobao.com/" target="_blank" class="block">
+                                        <div class="w-12 h-12 rounded-lg bg-red-500 flex items-center justify-center animate-bounce-slow">
+                                            <i class="fa fa-shopping-bag text-white text-xl"></i>
+                                        </div>
+                                    </a>
+                                </div>
+                                
+                                <div class="flex-grow">
+                                    <div class="flex justify-between items-start">
+                                        <h3 class="font-semibold text-lg">
+                                            <a href="https://www.taobao.com/" target="_blank" class="hover:text-primary">Taobao</a>
+                                        </h3>
+                                        <div class="flex items-center text-yellow-400 text-sm">
+                                            <i class="fa fa-star"></i>
+                                            <span class="ml-1 text-neutral-600">4.8</span>
+                                        </div>
+                                    </div>
+                                    
+                                    <p class="text-neutral-500 text-sm mt-1">China's largest e-commerce platform offering a vast range of products at competitive prices.</p>
+                                    
+                                    <div class="flex items-center mt-3 text-sm">
+                                        <span class="text-neutral-400">https://www.taobao.com</span>
+                                        <div class="ml-auto flex space-x-2">
+                                            <button class="text-neutral-400 hover:text-primary transition-colors" title="Vote Up">
+                                                <i class="fa fa-thumbs-up"></i>
+                                                <span class="ml-1">245</span>
+                                            </button>
+                                            <button class="text-neutral-400 hover:text-primary transition-colors comment-btn" title="Add Comment">
+                                                <i class="fa fa-comment"></i>
+                                                <span class="ml-1">32</span>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Site Card 2 -->
+                    <div class="bg-white rounded-xl overflow-hidden card-shadow site-card-hover">
+                        <div class="p-5">
+                            <div class="flex items-start">
+                                <div class="flex-shrink-0 mr-4">
+                                    <a href="https://www.amazon.com" target="_blank" class="block">
+                                        <div class="w-12 h-12 rounded-lg bg-orange-500 flex items-center justify-center animate-bounce-medium">
+                                            <i class="fa fa-amazon text-white text-xl"></i>
+                                        </div>
+                                    </a>
+                                </div>
+                                
+                                <div class="flex-grow">
+                                    <div class="flex justify-between items-start">
+                                        <h3 class="font-semibold text-lg">
+                                            <a href="https://www.amazon.com" target="_blank" class="hover:text-primary">Amazon</a>
+                                        </h3>
+                                        <div class="flex items-center text-yellow-400 text-sm">
+                                            <i class="fa fa-star"></i>
+                                            <span class="ml-1 text-neutral-600">4.7</span>
+                                        </div>
+                                    </div>
+                                    
+                                    <p class="text-neutral-500 text-sm mt-1">The world's largest online retailer and marketplace with a vast selection of products.</p>
+                                    
+                                    <div class="flex items-center mt-3 text-sm">
+                                        <span class="text-neutral-400">https://www.amazon.com</span>
+                                        <div class="ml-auto flex space-x-2">
+                                            <button class="text-neutral-400 hover:text-primary transition-colors" title="Vote Up">
+                                                <i class="fa fa-thumbs-up"></i>
+                                                <span class="ml-1">312</span>
+                                            </button>
+                                            <button class="text-neutral-400 hover:text-primary transition-colors comment-btn" title="Add Comment">
+                                                <i class="fa fa-comment"></i>
+                                                <span class="ml-1">47</span>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Site Card 3 -->
+                    <div class="bg-white rounded-xl overflow-hidden card-shadow site-card-hover">
+                        <div class="p-5">
+                            <div class="flex items-start">
+                                <div class="flex-shrink-0 mr-4">
+                                    <a href="https://www.tmall.com/" target="_blank" class="block">
+                                        <div class="w-12 h-12 rounded-lg bg-red-600 flex items-center justify-center animate-bounce-fast">
+                                            <i class="fa fa-shopping-cart text-white text-xl"></i>
+                                        </div>
+                                    </a>
+                                </div>
+                                
+                                <div class="flex-grow">
+                                    <div class="flex justify-between items-start">
+                                        <h3 class="font-semibold text-lg">
+                                            <a href="https://www.tmall.com/" target="_blank" class="hover:text-primary">Tmall</a>
+                                        </h3>
+                                        <div class="flex items-center text-yellow-400 text-sm">
+                                            <i class="fa fa-star"></i>
+                                            <span class="ml-1 text-neutral-600">4.6</span>
+                                        </div>
+                                    </div>
+                                    
+                                    <p class="text-neutral-500 text-sm mt-1">A leading Chinese B2C e-commerce platform focused on branded products and premium shopping experience.</p>
+                                    
+                                    <div class="flex items-center mt-3 text-sm">
+                                        <span class="text-neutral-400">https://www.tmall.com</span>
+                                        <div class="ml-auto flex space-x-2">
+                                            <button class="text-neutral-400 hover:text-primary transition-colors" title="Vote Up">
+                                                <i class="fa fa-thumbs-up"></i>
+                                                <span class="ml-1">189</span>
+                                            </button>
+                                            <button class="text-neutral-400 hover:text-primary transition-colors comment-btn" title="Add Comment">
+                                                <i class="fa fa-comment"></i>
+                                                <span class="ml-1">25</span>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Site Card 4 -->
+                    <div class="bg-white rounded-xl overflow-hidden card-shadow site-card-hover">
+                        <div class="p-5">
+                            <div class="flex items-start">
+                                <div class="flex-shrink-0 mr-4">
+                                    <a href="https://www.jd.com/" target="_blank" class="block">
+                                        <div class="w-12 h-12 rounded-lg bg-red-700 flex items-center justify-center animate-bounce-slow">
+                                            <i class="fa fa-truck text-white text-xl"></i>
+                                        </div>
+                                    </a>
+                                </div>
+                                
+                                <div class="flex-grow">
+                                    <div class="flex justify-between items-start">
+                                        <h3 class="font-semibold text-lg">
+                                            <a href="https://www.jd.com/" target="_blank" class="hover:text-primary">JD.com</a>
+                                        </h3>
+                                        <div class="flex items-center text-yellow-400 text-sm">
+                                            <i class="fa fa-star"></i>
+                                            <span class="ml-1 text-neutral-600">4.7</span>
+                                        </div>
+                                    </div>
+                                    
+                                    <p class="text-neutral-500 text-sm mt-1">China's second-largest e-commerce company known for its reliable delivery and authentic products.</p>
+                                    
+                                    <div class="flex items-center mt-3 text-sm">
+                                        <span class="text-neutral-400">https://www.jd.com</span>
+                                        <div class="ml-auto flex space-x-2">
+                                            <button class="text-neutral-400 hover:text-primary transition-colors" title="Vote Up">
+                                                <i class="fa fa-thumbs-up"></i>
+                                                <span class="ml-1">278</span>
+                                            </button>
+                                            <button class="text-neutral-400 hover:text-primary transition-colors comment-btn" title="Add Comment">
+                                                <i class="fa fa-comment"></i>
+                                                <span class="ml-1">41</span>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Site Card 5 -->
+                    <div class="bg-white rounded-xl overflow-hidden card-shadow site-card-hover">
+                        <div class="p-5">
+                            <div class="flex items-start">
+                                <div class="flex-shrink-0 mr-4">
+                                    <a href="https://www.aliexpress.com/" target="_blank" class="block">
+                                        <div class="w-12 h-12 rounded-lg bg-orange-600 flex items-center justify-center animate-bounce-medium">
+                                            <i class="fa fa-globe text-white text-xl"></i>
+                                        </div>
+                                    </a>
+                                </div>
+                                
+                                <div class="flex-grow">
+                                    <div class="flex justify-between items-start">
+                                        <h3 class="font-semibold text-lg">
+                                            <a href="https://www.aliexpress.com/" target="_blank" class="hover:text-primary">AliExpress</a>
+                                        </h3>
+                                        <div class="flex items-center text-yellow-400 text-sm">
+                                            <i class="fa fa-star"></i>
+                                            <span class="ml-1 text-neutral-600">4.5</span>
+                                        </div>
+                                    </div>
+                                    
+                                    <p class="text-neutral-500 text-sm mt-1">A global e-commerce platform connecting international buyers with Chinese sellers.</p>
+                                    
+                                    <div class="flex items-center mt-3 text-sm">
+                                        <span class="text-neutral-400">https://www.aliexpress.com</span>
+                                        <div class="ml-auto flex space-x-2">
+                                            <button class="text-neutral-400 hover:text-primary transition-colors" title="Vote Up">
+                                                <i class="fa fa-thumbs-up"></i>
+                                                <span class="ml-1">235</span>
+                                            </button>
+                                            <button class="text-neutral-400 hover:text-primary transition-colors comment-btn" title="Add Comment">
+                                                <i class="fa fa-comment"></i>
+                                                <span class="ml-1">36</span>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Site Card 6 -->
+                    <div class="bg-white rounded-xl overflow-hidden card-shadow site-card-hover">
+                        <div class="p-5">
+                            <div class="flex items-start">
+                                <div class="flex-shrink-0 mr-4">
+                                    <a href="https://www.ebay.com/" target="_blank" class="block">
+                                        <div class="w-12 h-12 rounded-lg bg-blue-600 flex items-center justify-center animate-bounce-fast">
+                                            <i class="fa fa-gavel text-white text-xl"></i>
+                                        </div>
+                                    </a>
+                                </div>
+                                
+                                <div class="flex-grow">
+                                    <div class="flex justify-between items-start">
+                                        <h3 class="font-semibold text-lg">
+                                            <a href="https://www.ebay.com/" target="_blank" class="hover:text-primary">eBay</a>
+                                        </h3>
+                                        <div class="flex items-center text-yellow-400 text-sm">
+                                            <i class="fa fa-star"></i>
+                                            <span class="ml-1 text-neutral-600">4.6</span>
+                                        </div>
+                                    </div>
+                                    
+                                    <p class="text-neutral-500 text-sm mt-1">An American e-commerce company that facilitates consumer-to-consumer and business-to-consumer sales.</p>
+                                    
+                                    <div class="flex items-center mt-3 text-sm">
+                                        <span class="text-neutral-400">https://www.ebay.com</span>
+                                        <div class="ml-auto flex space-x-2">
+                                            <button class="text-neutral-400 hover:text-primary transition-colors" title="Vote Up">
+                                                <i class="fa fa-thumbs-up"></i>
+                                                <span class="ml-1">291</span>
+                                            </button>
+                                            <button class="text-neutral-400 hover:text-primary transition-colors comment-btn" title="Add Comment">
+                                                <i class="fa fa-comment"></i>
+                                                <span class="ml-1">43</span>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- AI Category -->
+            <div id="ai" class="category-section" data-category="ai">
+                <h2 class="text-2xl font-bold text-neutral-700 mb-6 flex items-center">
+                    <i class="fa fa-robot text-primary mr-2"></i> AI
+                </h2>
+                
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <!-- Site Card 1 -->
+                    <div class="bg-white rounded-xl overflow-hidden card-shadow site-card-hover">
+                        <div class="p-5">
+                            <div class="flex items-start">
+                                <div class="flex-shrink-0 mr-4">
+                                    <a href="https://chat.openai.com/" target="_blank" class="block">
+                                        <div class="w-12 h-12 rounded-lg bg-green-500 flex items-center justify-center animate-bounce-slow animate-delay-100">
+                                            <i class="fa fa-comments text-white text-xl"></i>
+                                        </div>
+                                    </a>
+                                </div>
+                                
+                                <div class="flex-grow">
+                                    <div class="flex justify-between items-start">
+                                        <h3 class="font-semibold text-lg">
+                                            <a href="https://chat.openai.com/" target="_blank" class="hover:text-primary">ChatGPT</a>
+                                        </h3>
+                                        <div class="flex items-center text-yellow-400 text-sm">
+                                            <i class="fa fa-star"></i>
+                                            <span class="ml-1 text-neutral-600">4.9</span>
+                                        </div>
+                                    </div>
+                                    
+                                    <p class="text-neutral-500 text-sm mt-1">An advanced language model developed by OpenAI that can generate human-like text responses.</p>
+                                    
+                                    <div class="flex items-center mt-3 text-sm">
+                                        <span class="text-neutral-400">https://chat.openai.com</span>
+                                        <div class="ml-auto flex space-x-2">
+                                            <button class="text-neutral-400 hover:text-primary transition-colors" title="Vote Up">
+                                                <i class="fa fa-thumbs-up"></i>
+                                                <span class="ml-1">421</span>
+                                            </button>
+                                            <button class="text-neutral-400 hover:text-primary transition-colors comment-btn" title="Add Comment">
+                                                <i class="fa fa-comment"></i>
+                                                <span class="ml-1">67</span>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Site Card 2 -->
+                    <div class="bg-white rounded-xl overflow-hidden card-shadow site-card-hover">
+                        <div class="p-5">
+                            <div class="flex items-start">
+                                <div class="flex-shrink-0 mr-4">
+                                    <a href="https://www.deepseek.com/" target="_blank" class="block">
+                                        <div class="w-12 h-12 rounded-lg bg-blue-700 flex items-center justify-center animate-bounce-medium animate-delay-200">
+                                            <i class="fa fa-search text-white text-xl"></i>
+                                        </div>
+                                    </a>
+                                </div>
+                                
+                                <div class="flex-grow">
+                                    <div class="flex justify-between items-start">
+                                        <h3 class="font-semibold text-lg">
+                                            <a href="https://www.deepseek.com/" target="_blank" class="hover:text-primary">DeepSeek</a>
+                                        </h3>
+                                        <div class="flex items-center text-yellow-400 text-sm">
+                                            <i class="fa fa-star"></i>
+                                            <span class="ml-1 text-neutral-600">4.8</span>
+                                        </div>
+                                    </div>
+                                    
+                                    <p class="text-neutral-500 text-sm mt-1">A powerful AI platform offering advanced search capabilities and AI-driven insights.</p>
+                                    
+                                    <div class="flex items-center mt-3 text-sm">
+                                        <span class="text-neutral-400">https://www.deepseek.com</span>
+                                        <div class="ml-auto flex space-x-2">
+                                            <button class="text-neutral-400 hover:text-primary transition-colors" title="Vote Up">
+                                                <i class="fa fa-thumbs-up"></i>
+                                                <span class="ml-1">356</span>
+                                            </button>
+                                            <button class="text-neutral-400 hover:text-primary transition-colors comment-btn" title="Add Comment">
+                                                <i class="fa fa-comment"></i>
+                                                <span class="ml-1">53</span>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Site Card 3 -->
+                    <div class="bg-white rounded-xl overflow-hidden card-shadow site-card-hover">
+                        <div class="p-5">
+                            <div class="flex items-start">
+                                <div class="flex-shrink-0 mr-4">
+                                    <a href="https://www.doubao.com/chat/" target="_blank" class="block">
+                                        <div class="w-12 h-12 rounded-lg bg-primary flex items-center justify-center animate-bounce-fast animate-delay-300">
+                                            <i class="fa fa-lightbulb-o text-white text-xl"></i>
+                                        </div>
+                                    </a>
+                                </div>
+                                
+                                <div class="flex-grow">
+                                    <div class="flex justify-between items-start">
+                                        <h3 class="font-semibold text-lg">
+                                            <a href="https://www.doubao.com/chat/" target="_blank" class="hover:text-primary">Doubao</a>
+                                        </h3>
+                                        <div class="flex items-center text-yellow-400 text-sm">
+                                            <i class="fa fa-star"></i>
+                                            <span class="ml-1 text-neutral-600">4.7</span>
+                                        </div>
+                                    </div>
+                                    
+                                    <p class="text-neutral-500 text-sm mt-1">An intelligent chat assistant that provides helpful answers and guidance across various topics.</p>
+                                    
+                                    <div class="flex items-center mt-3 text-sm">
+                                        <span class="text-neutral-400">https://www.doubao.com/chat</span>
+                                        <div class="ml-auto flex space-x-2">
+                                            <button class="text-neutral-400 hover:text-primary transition-colors" title="Vote Up">
+                                                <i class="fa fa-thumbs-up"></i>
+                                                <span class="ml-1">298</span>
+                                            </button>
+                                            <button class="text-neutral-400 hover:text-primary transition-colors comment-btn" title="Add Comment">
+                                                <i class="fa fa-comment"></i>
+                                                <span class="ml-1">42</span>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Site Card 4 -->
+                    <div class="bg-white rounded-xl overflow-hidden card-shadow site-card-hover">
+                        <div class="p-5">
+                            <div class="flex items-start">
+                                <div class="flex-shrink-0 mr-4">
+                                    <a href="https://bard.google.com/" target="_blank" class="block">
+                                        <div class="w-12 h-12 rounded-lg bg-blue-500 flex items-center justify-center animate-bounce-slow animate-delay-400">
+                                            <i class="fa fa-google text-white text-xl"></i>
+                                        </div>
+                                    </a>
+                                </div>
+                                
+                                <div class="flex-grow">
+                                    <div class="flex justify-between items-start">
+                                        <h3 class="font-semibold text-lg">
+                                            <a href="https://bard.google.com/" target="_blank" class="hover:text-primary">Google Bard</a>
+                                        </h3>
+                                        <div class="flex items-center text-yellow-400 text-sm">
+                                            <i class="fa fa-star"></i>
+                                            <span class="ml-1 text-neutral-600">4.8</span>
+                                        </div>
+                                    </div>
+                                    
+                                    <p class="text-neutral-500 text-sm mt-1">Google's conversational AI chatbot that can generate text, answer questions, and more.</p>
+                                    
+                                    <div class="flex items-center mt-3 text-sm">
+                                        <span class="text-neutral-400">https://bard.google.com</span>
+                                        <div class="ml-auto flex space-x-2">
+                                            <button class="text-neutral-400 hover:text-primary transition-colors" title="Vote Up">
+                                                <i class="fa fa-thumbs-up"></i>
+                                                <span class="ml-1">387</span>
+                                            </button>
+                                            <button class="text-neutral-400 hover:text-primary transition-colors comment-btn" title="Add Comment">
+                                                <i class="fa fa-comment"></i>
+                                                <span class="ml-1">59</span>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Site Card 5 -->
+                    <div class="bg-white rounded-xl overflow-hidden card-shadow site-card-hover">
+                        <div class="p-5">
+                            <div class="flex items-start">
+                                <div class="flex-shrink-0 mr-4">
+                                    <a href="https://www.anthropic.com/" target="_blank" class="block">
+                                        <div class="w-12 h-12 rounded-lg bg-purple-600 flex items-center justify-center animate-bounce-medium animate-delay-500">
+                                            <i class="fa fa-rocket text-white text-xl"></i>
+                                        </div>
+                                    </a>
+                                </div>
+                                
+                                <div class="flex-grow">
+                                    <div class="flex justify-between items-start">
+                                        <h3 class="font-semibold text-lg">
+                                            <a href="https://www.anthropic.com/" target="_blank" class="hover:text-primary">Claude</a>
+                                        </h3>
+                                        <div class="flex items-center text-yellow-400 text-sm">
+                                            <i class="fa fa-star"></i>
+                                            <span class="ml-1 text-neutral-600">4.7</span>
+                                        </div>
+                                    </div>
+                                    
+                                    <p class="text-neutral-500 text-sm mt-1">An AI assistant developed by Anthropic, designed to be helpful, harmless, and honest.</p>
+                                    
+                                    <div class="flex items-center mt-3 text-sm">
+                                        <span class="text-neutral-400">https://www.anthropic.com</span>
+                                        <div class="ml-auto flex space-x-2">
+                                            <button class="text-neutral-400 hover:text-primary transition-colors" title="Vote Up">
+                                                <i class="fa fa-thumbs-up"></i>
+                                                <span class="ml-1">324</span>
+                                            </button>
+                                            <button class="text-neutral-400 hover:text-primary transition-colors comment-btn" title="Add Comment">
+                                                <i class="fa fa-comment"></i>
+                                                <span class="ml-1">48</span>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Site Card 6 -->
+                    <div class="bg-white rounded-xl overflow-hidden card-shadow site-card-hover">
+                        <div class="p-5">
+                            <div class="flex items-start">
+                                <div class="flex-shrink-0 mr-4">
+                                    <a href="https://www.midjourney.com/" target="_blank" class="block">
+                                        <div class="w-12 h-12 rounded-lg bg-indigo-600 flex items-center justify-center animate-bounce-fast">
+                                            <i class="fa fa-paint-brush text-white text-xl"></i>
+                                        </div>
+                                    </a>
+                                </div>
+                                
+                                <div class="flex-grow">
+                                    <div class="flex justify-between items-start">
+                                        <h3 class="font-semibold text-lg">
+                                            <a href="https://www.midjourney.com/" target="_blank" class="hover:text-primary">MidJourney</a>
+                                        </h3>
+                                        <div class="flex items-center text-yellow-400 text-sm">
+                                            <i class="fa fa-star"></i>
+                                            <span class="ml-1 text-neutral-600">4.9</span>
+                                        </div>
+                                    </div>
+                                    
+                                    <p class="text-neutral-500 text-sm mt-1">An AI image generation service that creates realistic images from text descriptions.</p>
+                                    
+                                    <div class="flex items-center mt-3 text-sm">
+                                        <span class="text-neutral-400">https://www.midjourney.com</span>
+                                        <div class="ml-auto flex space-x-2">
+                                            <button class="text-neutral-400 hover:text-primary transition-colors" title="Vote Up">
+                                                <i class="fa fa-thumbs-up"></i>
+                                                <span class="ml-1">452</span>
+                                            </button>
+                                            <button class="text-neutral-400 hover:text-primary transition-colors comment-btn" title="Add Comment">
+                                                <i class="fa fa-comment"></i>
+                                                <span class="ml-1">72</span>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Browsers Category -->
+            <div id="browsers" class="category-section" data-category="browsers">
+                <h2 class="text-2xl font-bold text-neutral-700 mb-6 flex items-center">
+                    <i class="fa fa-globe text-primary mr-2"></i> Browsers
+                </h2>
+                
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <!-- Site Card 1 -->
+                    <div class="bg-white rounded-xl overflow-hidden card-shadow site-card-hover">
+                        <div class="p-5">
+                            <div class="flex items-start">
+                                <div class="flex-shrink-0 mr-4">
+                                    <a href="https://www.google.com/chrome/" target="_blank" class="block">
+                                        <div class="w-12 h-12 rounded-lg bg-red-500 flex items-center justify-center animate-bounce-slow animate-delay-400">
+                                            <i class="fa fa-chrome text-white text-xl"></i>
+                                        </div>
+                                    </a>
+                                </div>
+                                
+                                <div class="flex-grow">
+                                    <div class="flex justify-between items-start">
+                                        <h3 class="font-semibold text-lg">
+                                            <a href="https://www.google.com/chrome/" target="_blank" class="hover:text-primary">Google Chrome</a>
+                                        </h3>
+                                        <div class="flex items-center text-yellow-400 text-sm">
+                                            <i class="fa fa-star"></i>
+                                            <span class="ml-1 text-neutral-600">4.8</span>
+                                        </div>
+                                    </div>
+                                    
+                                    <p class="text-neutral-500 text-sm mt-1">The most popular web browser developed by Google, known for its speed and simplicity.</p>
+                                    
+                                    <div class="flex items-center mt-3 text-sm">
+                                        <span class="text-neutral-400">https://www.google.com/chrome</span>
+                                        <div class="ml-auto flex space-x-2">
+                                            <button class="text-neutral-400 hover:text-primary transition-colors" title="Vote Up">
+                                                <i class="fa fa-thumbs-up"></i>
+                                                <span class="ml-1">376</span>
+                                            </button>
+                                            <button class="text-neutral-400 hover:text-primary transition-colors comment-btn" title="Add Comment">
+                                                <i class="fa fa-comment"></i>
+                                                <span class="ml-1">58</span>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Site Card 2 -->
+                    <div class="bg-white rounded-xl overflow-hidden card-shadow site-card-hover">
+                        <div class="p-5">
+                            <div class="flex items-start">
+                                <div class="flex-shrink-0 mr-4">
+                                    <a href="https://browser.qq.com/" target="_blank" class="block">
+                                        <div class="w-12 h-12 rounded-lg bg-blue-500 flex items-center justify-center animate-bounce-medium animate-delay-500">
+                                            <i class="fa fa-firefox text-white text-xl"></i>
+                                        </div>
+                                    </a>
+                                </div>
+                                
+                                <div class="flex-grow">
+                                    <div class="flex justify-between items-start">
+                                        <h3 class="font-semibold text-lg">
+                                            <a href="https://browser.qq.com/" target="_blank" class="hover:text-primary">QQ Browser</a>
+                                        </h3>
+                                        <div class="flex items-center text-yellow-400 text-sm">
+                                            <i class="fa fa-star"></i>
+                                            <span class="ml-1 text-neutral-600">4.5</span>
+                                        </div>
+                                    </div>
+                                    
+                                    <p class="text-neutral-500 text-sm mt-1">A popular web browser developed by Tencent, offering a variety of features and integrations.</p>
+                                    
+                                    <div class="flex items-center mt-3 text-sm">
+                                        <span class="text-neutral-400">https://browser.qq.com</span>
+                                        <div class="ml-auto flex space-x-2">
+                                            <button class="text-neutral-400 hover:text-primary transition-colors" title="Vote Up">
+                                                <i class="fa fa-thumbs-up"></i>
+                                                <span class="ml-1">254</span>
+                                            </button>
+                                            <button class="text-neutral-400 hover:text-primary transition-colors comment-btn" title="Add Comment">
+                                                <i class="fa fa-comment"></i>
+                                                <span class="ml-1">39</span>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Site Card 3 -->
+                    <div class="bg-white rounded-xl overflow-hidden card-shadow site-card-hover">
+                        <div class="p-5">
+                            <div class="flex items-start">
+                                <div class="flex-shrink-0 mr-4">
+                                    <a href="https://browser.360.cn/" target="_blank" class="block">
+                                        <div class="w-12 h-12 rounded-lg bg-green-600 flex items-center justify-center animate-bounce-slow">
+                                            <i class="fa fa-shield text-white text-xl"></i>
+                                        </div>
+                                    </a>
+                                </div>
+                                
+                                <div class="flex-grow">
+                                    <div class="flex justify-between items-start">
+                                        <h3 class="font-semibold text-lg">
+                                            <a href="https://browser.360.cn/" target="_blank" class="hover:text-primary">360 Browser</a>
+                                        </h3>
+                                        <div class="flex items-center text-yellow-400 text-sm">
+                                            <i class="fa fa-star"></i>
+                                            <span class="ml-1 text-neutral-600">4.4</span>
+                                        </div>
+                                    </div>
+                                    
+                                    <p class="text-neutral-500 text-sm mt-1">A secure web browser with built-in security features and a user-friendly interface.</p>
+                                    
+                                    <div class="flex items-center mt-3 text-sm">
+                                        <span class="text-neutral-400">https://browser.360.cn</span>
+                                        <div class="ml-auto flex space-x-2">
+                                            <button class="text-neutral-400 hover:text-primary transition-colors" title="Vote Up">
+                                                <i class="fa fa-thumbs-up"></i>
+                                                <span class="ml-1">217</span>
+                                            </button>
+                                            <button class="text-neutral-400 hover:text-primary transition-colors comment-btn" title="Add Comment">
+                                                <i class="fa fa-comment"></i>
+                                                <span class="ml-1">31</span>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Site Card 4 -->
+                    <div class="bg-white rounded-xl overflow-hidden card-shadow site-card-hover">
+                        <div class="p-5">
+                            <div class="flex items-start">
+                                <div class="flex-shrink-0 mr-4">
+                                    <a href="https://www.firefox.com/" target="_blank" class="block">
+                                        <div class="w-12 h-12 rounded-lg bg-orange-500 flex items-center justify-center animate-bounce-medium">
+                                            <i class="fa fa-firefox text-white text-xl"></i>
+                                        </div>
+                                    </a>
+                                </div>
+                                
+                                <div class="flex-grow">
+                                    <div class="flex justify-between items-start">
+                                        <h3 class="font-semibold text-lg">
+                                            <a href="https://www.firefox.com/" target="_blank" class="hover:text-primary">Mozilla Firefox</a>
+                                        </h3>
+                                        <div class="flex items-center text-yellow-400 text-sm">
+                                            <i class="fa fa-star"></i>
+                                            <span class="ml-1 text-neutral-600">4.7</span>
+                                        </div>
+                                    </div>
+                                    
+                                    <p class="text-neutral-500 text-sm mt-1">A free and open-source web browser known for its privacy features and customization options.</p>
+                                    
+                                    <div class="flex items-center mt-3 text-sm">
+                                        <span class="text-neutral-400">https://www.firefox.com</span>
+                                        <div class="ml-auto flex space-x-2">
+                                            <button class="text-neutral-400 hover:text-primary transition-colors" title="Vote Up">
+                                                <i class="fa fa-thumbs-up"></i>
+                                                <span class="ml-1">342</span>
+                                            </button>
+                                            <button class="text-neutral-400 hover:text-primary transition-colors comment-btn" title="Add Comment">
+                                                <i class="fa fa-comment"></i>
+                                                <span class="ml-1">52</span>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Site Card 5 -->
+                    <div class="bg-white rounded-xl overflow-hidden card-shadow site-card-hover">
+                        <div class="p-5">
+                            <div class="flex items-start">
+                                <div class="flex-shrink-0 mr-4">
+                                    <a href="https://www.microsoft.com/en-us/edge" target="_blank" class="block">
+                                        <div class="w-12 h-12 rounded-lg bg-blue-400 flex items-center justify-center animate-bounce-fast">
+                                            <i class="fa fa-edge text-white text-xl"></i>
+                                        </div>
+                                    </a>
+                                </div>
+                                
+                                <div class="flex-grow">
+                                    <div class="flex justify-between items-start">
+                                        <h3 class="font-semibold text-lg">
+                                            <a href="https://www.microsoft.com/en-us/edge" target="_blank" class="hover:text-primary">Microsoft Edge</a>
+                                        </h3>
+                                        <div class="flex items-center text-yellow-400 text-sm">
+                                            <i class="fa fa-star"></i>
+                                            <span class="ml-1 text-neutral-600">4.6</span>
+                                        </div>
+                                    </div>
+                                    
+                                    <p class="text-neutral-500 text-sm mt-1">Microsoft's modern web browser, built on Chromium with enhanced privacy features.</p>
+                                    
+                                    <div class="flex items-center mt-3 text-sm">
+                                        <span class="text-neutral-400">https://www.microsoft.com/en-us/edge</span>
+                                        <div class="ml-auto flex space-x-2">
+                                            <button class="text-neutral-400 hover:text-primary transition-colors" title="Vote Up">
+                                                <i class="fa fa-thumbs-up"></i>
+                                                <span class="ml-1">293</span>
+                                            </button>
+                                            <button class="text-neutral-400 hover:text-primary transition-colors comment-btn" title="Add Comment">
+                                                <i class="fa fa-comment"></i>
+                                                <span class="ml-1">45</span>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Site Card 6 -->
+                    <div class="bg-white rounded-xl overflow-hidden card-shadow site-card-hover">
+                        <div class="p-5">
+                            <div class="flex items-start">
+                                <div class="flex-shrink-0 mr-4">
+                                    <a href="https://www.opera.com/" target="_blank" class="block">
+                                        <div class="w-12 h-12 rounded-lg bg-red-700 flex items-center justify-center animate-bounce-slow">
+                                            <i class="fa fa-opera text-white text-xl"></i>
+                                        </div>
+                                    </a>
+                                </div>
+                                
+                                <div class="flex-grow">
+                                    <div class="flex justify-between items-start">
+                                        <h3 class="font-semibold text-lg">
+                                            <a href="https://www.opera.com/" target="_blank" class="hover:text-primary">Opera</a>
+                                        </h3>
+                                        <div class="flex items-center text-yellow-400 text-sm">
+                                            <i class="fa fa-star"></i>
+                                            <span class="ml-1 text-neutral-600">4.5</span>
+                                        </div>
+                                    </div>
+                                    
+                                    <p class="text-neutral-500 text-sm mt-1">A fast and secure web browser with built-in VPN, ad blocker, and battery saver.</p>
+                                    
+                                    <div class="flex items-center mt-3 text-sm">
+                                        <span class="text-neutral-400">https://www.opera.com</span>
+                                        <div class="ml-auto flex space-x-2">
+                                            <button class="text-neutral-400 hover:text-primary transition-colors" title="Vote Up">
+                                                <i class="fa fa-thumbs-up"></i>
+                                                <span class="ml-1">268</span>
+                                            </button>
+                                            <button class="text-neutral-400 hover:text-primary transition-colors comment-btn" title="Add Comment">
+                                                <i class="fa fa-comment"></i>
+                                                <span class="ml-1">40</span>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Games Category -->
+            <div id="games" class="category-section" data-category="games">
+                <h2 class="text-2xl font-bold text-neutral-700 mb-6 flex items-center">
+                    <i class="fa fa-gamepad text-primary mr-2"></i> Games
+                </h2>
+                
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <!-- Existing Game Site Card 1 -->
+                    <div class="bg-white rounded-xl overflow-hidden card-shadow site-card-hover">
+                        <div class="p-5">
+                            <div class="flex items-start">
+                                <div class="flex-shrink-0 mr-4">
+                                    <a href="https://wan.360.cn/" target="_blank" class="block">
+                                        <div class="w-12 h-12 rounded-lg bg-purple-600 flex items-center justify-center animate-bounce-medium">
+                                            <i class="fa fa-gamepad text-white text-xl"></i>
+                                        </div>
+                                    </a>
+                                </div>
+                                
+                                <div class="flex-grow">
+                                    <div class="flex justify-between items-start">
+                                        <h3 class="font-semibold text-lg">
+                                            <a href="https://wan.360.cn/" target="_blank" class="hover:text-primary">360 Games</a>
+                                        </h3>
+                                        <div class="flex items-center text-yellow-400 text-sm">
+                                            <i class="fa fa-star"></i>
+                                            <span class="ml-1 text-neutral-600">4.6</span>
+                                        </div>
+                                    </div>
+                                    
+                                    <p class="text-neutral-500 text-sm mt-1">A comprehensive gaming platform offering a wide variety of online games and gaming services.</p>
+                                    
+                                    <div class="flex items-center mt-3 text-sm">
+                                        <span class="text-neutral-400">https://wan.360.cn</span>
+                                        <div class="ml-auto flex space-x-2">
+                                            <button class="text-neutral-400 hover:text-primary transition-colors" title="Vote Up">
+                                                <i class="fa fa-thumbs-up"></i>
+                                                <span class="ml-1">287</span>
+                                            </button>
+                                            <button class="text-neutral-400 hover:text-primary transition-colors comment-btn" title="Add Comment">
+                                                <i class="fa fa-comment"></i>
+                                                <span class="ml-1">43</span>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    
+<!-- Popular Game Site Card 2 -->
+<div class="bg-white rounded-xl overflow-hidden card-shadow site-card-hover">
+    <div class="p-5">
+        <div class="flex items-start">
+            <div class="flex-shrink-0 mr-4">
+                <a href="https://www.miniclip.com/" target="_blank" class="block">
+                    <div class="w-12 h-12 rounded-lg bg-green-500 flex items-center justify-center animate-bounce-fast">
+                        <i class="fa fa-gamepad text-white text-xl"></i>
+                    </div>
+                </a>
+            </div>
+            <div class="flex-grow">
+                <div class="flex justify-between items-start">
+                    <h3 class="font-semibold text-lg">
+                        <a href="https://www.miniclip.com/" target="_blank" class="hover:text-primary">Miniclip</a>
+                    </h3>
+                    <div class="flex items-center text-yellow-400 text-sm">
+                        <i class="fa fa-star"></i>
+                        <span class="ml-1 text-neutral-600">4.8</span>
+                    </div>
+                </div>
+                <p class="text-neutral-500 text-sm mt-1">Popular site with action, sports and multiplayer games.</p>
+                <div class="flex items-center mt-3 text-sm">
+                    <span class="text-neutral-400">https://www.miniclip.com</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="bg-white rounded-xl overflow-hidden card-shadow site-card-hover">
+    <div class="p-5">
+        <div class="flex items-start">
+            <div class="flex-shrink-0 mr-4">
+                <a href="https://www.pogo.com/" target="_blank" class="block">
+                    <div class="w-12 h-12 rounded-lg bg-indigo-500 flex items-center justify-center animate-bounce-medium">
+                        <i class="fa fa-gamepad text-white text-xl"></i>
+                    </div>
+                </a>
+            </div>
+            <div class="flex-grow">
+                <div class="flex justify-between items-start">
+                    <h3 class="font-semibold text-lg">
+                        <a href="https://www.pogo.com/" target="_blank" class="hover:text-primary">Pogo</a>
+                    </h3>
+                    <div class="flex items-center text-yellow-400 text-sm">
+                        <i class="fa fa-star"></i>
+                        <span class="ml-1 text-neutral-600">4.5</span>
+                    </div>
+                </div>
+                <p class="text-neutral-500 text-sm mt-1">Online platform for casual games including puzzle and card games.</p>
+                <div class="flex items-center mt-3 text-sm">
+                    <span class="text-neutral-400">https://www.pogo.com</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="bg-white rounded-xl overflow-hidden card-shadow site-card-hover">
+    <div class="p-5">
+        <div class="flex items-start">
+            <div class="flex-shrink-0 mr-4">
+                <a href="https://www.crazygames.com/" target="_blank" class="block">
+                    <div class="w-12 h-12 rounded-lg bg-yellow-500 flex items-center justify-center animate-bounce-slow">
+                        <i class="fa fa-gamepad text-white text-xl"></i>
+                    </div>
+                </a>
+            </div>
+            <div class="flex-grow">
+                <div class="flex justify-between items-start">
+                    <h3 class="font-semibold text-lg">
+                        <a href="https://www.crazygames.com/" target="_blank" class="hover:text-primary">CrazyGames</a>
+                    </h3>
+                    <div class="flex items-center text-yellow-400 text-sm">
+                        <i class="fa fa-star"></i>
+                        <span class="ml-1 text-neutral-600">4.7</span>
+                    </div>
+                </div>
+                <p class="text-neutral-500 text-sm mt-1">A huge collection of browser games including shooters, racing, and more.</p>
+                <div class="flex items-center mt-3 text-sm">
+                    <span class="text-neutral-400">https://www.crazygames.com</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="bg-white rounded-xl overflow-hidden card-shadow site-card-hover">
+    <div class="p-5">
+        <div class="flex items-start">
+            <div class="flex-shrink-0 mr-4">
+                <a href="https://www.kongregate.com/" target="_blank" class="block">
+                    <div class="w-12 h-12 rounded-lg bg-pink-500 flex items-center justify-center animate-bounce-medium">
+                        <i class="fa fa-gamepad text-white text-xl"></i>
+                    </div>
+                </a>
+            </div>
+            <div class="flex-grow">
+                <div class="flex justify-between items-start">
+                    <h3 class="font-semibold text-lg">
+                        <a href="https://www.kongregate.com/" target="_blank" class="hover:text-primary">Kongregate</a>
+                    </h3>
+                    <div class="flex items-center text-yellow-400 text-sm">
+                        <i class="fa fa-star"></i>
+                        <span class="ml-1 text-neutral-600">4.6</span>
+                    </div>
+                </div>
+                <p class="text-neutral-500 text-sm mt-1">A classic platform featuring thousands of indie and flash games.</p>
+                <div class="flex items-center mt-3 text-sm">
+                    <span class="text-neutral-400">https://www.kongregate.com</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Existing Game Site Card 2 -->
+                    
+                </div>
+            </div>
+            
+            <!-- Maps Category -->
+            <div id="maps" class="category-section" data-category="maps">
+                <h2 class="text-2xl font-bold text-neutral-700 mb-6 flex items-center">
+                    <i class="fa fa-map-marker text-primary mr-2"></i> Map Navigation
+                </h2>
+                
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <!-- Google Maps -->
+                    <div class="bg-white rounded-xl overflow-hidden card-shadow site-card-hover">
+                        <div class="p-5">
+                            <div class="flex items-start">
+                                <div class="flex-shrink-0 mr-4">
+                                    <a href="https://www.google.com/maps/" target="_blank" class="block">
+                                        <div class="w-12 h-12 rounded-lg bg-blue-500 flex items-center justify-center animate-bounce-medium">
+                                            <i class="fa fa-map text-white text-xl"></i>
+                                        </div>
+                                    </a>
+                                </div>
+                                
+                                <div class="flex-grow">
+                                    <div class="flex justify-between items-start">
+                                        <h3 class="font-semibold text-lg">
+                                            <a href="https://www.google.com/maps/" target="_blank" class="hover:text-primary">Google Maps</a>
+                                        </h3>
+                                        <div class="flex items-center text-yellow-400 text-sm">
+                                            <i class="fa fa-star"></i>
+                                            <span class="ml-1 text-neutral-600">4.9</span>
+                                        </div>
+                                    </div>
+                                    
+                                    <p class="text-neutral-500 text-sm mt-1">World's most comprehensive mapping platform with real-time traffic, satellite imagery, and street view.</p>
+                                    
+                                    <div class="flex items-center mt-3 text-sm">
+                                        <span class="text-neutral-400">https://www.google.com/maps</span>
+                                        <div class="ml-auto flex space-x-2">
+                                            <button class="text-neutral-400 hover:text-primary transition-colors" title="Vote Up">
+                                                <i class="fa fa-thumbs-up"></i>
+                                                <span class="ml-1">892</span>
+                                            </button>
+                                            <button class="text-neutral-400 hover:text-primary transition-colors comment-btn" title="Add Comment">
+                                                <i class="fa fa-comment"></i>
+                                                <span class="ml-1">156</span>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Sygic -->
+                    <div class="bg-white rounded-xl overflow-hidden card-shadow site-card-hover">
+                        <div class="p-5">
+                            <div class="flex items-start">
+                                <div class="flex-shrink-0 mr-4">
+                                    <a href="https://www.sygic.com" target="_blank" class="block">
+                                        <div class="w-12 h-12 rounded-lg bg-green-600 flex items-center justify-center animate-bounce-fast">
+                                            <i class="fa fa-location-arrow text-white text-xl"></i>
+                                        </div>
+                                    </a>
+                                </div>
+                                
+                                <div class="flex-grow">
+                                    <div class="flex justify-between items-start">
+                                        <h3 class="font-semibold text-lg">
+                                            <a href="https://www.sygic.com" target="_blank" class="hover:text-primary">Sygic</a>
+                                        </h3>
+                                        <div class="flex items-center text-yellow-400 text-sm">
+                                            <i class="fa fa-star"></i>
+                                            <span class="ml-1 text-neutral-600">4.7</span>
+                                        </div>
+                                    </div>
+                                    
+                                    <p class="text-neutral-500 text-sm mt-1">Premium GPS navigation app with offline maps, traffic information, and advanced routing features.</p>
+                                    
+                                    <div class="flex items-center mt-3 text-sm">
+                                        <span class="text-neutral-400">https://www.sygic.com</span>
+                                        <div class="ml-auto flex space-x-2">
+                                            <button class="text-neutral-400 hover:text-primary transition-colors" title="Vote Up">
+                                                <i class="fa fa-thumbs-up"></i>
+                                                <span class="ml-1">324</span>
+                                            </button>
+                                            <button class="text-neutral-400 hover:text-primary transition-colors comment-btn" title="Add Comment">
+                                                <i class="fa fa-comment"></i>
+                                                <span class="ml-1">67</span>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- HERE WeGo -->
+                    <div class="bg-white rounded-xl overflow-hidden card-shadow site-card-hover">
+                        <div class="p-5">
+                            <div class="flex items-start">
+                                <div class="flex-shrink-0 mr-4">
+                                    <a href="https://wego.here.com" target="_blank" class="block">
+                                        <div class="w-12 h-12 rounded-lg bg-purple-600 flex items-center justify-center animate-bounce-slow">
+                                            <i class="fa fa-road text-white text-xl"></i>
+                                        </div>
+                                    </a>
+                                </div>
+                                
+                                <div class="flex-grow">
+                                    <div class="flex justify-between items-start">
+                                        <h3 class="font-semibold text-lg">
+                                            <a href="https://wego.here.com" target="_blank" class="hover:text-primary">HERE WeGo</a>
+                                        </h3>
+                                        <div class="flex items-center text-yellow-400 text-sm">
+                                            <i class="fa fa-star"></i>
+                                            <span class="ml-1 text-neutral-600">4.6</span>
+                                        </div>
+                                    </div>
+                                    
+                                    <p class="text-neutral-500 text-sm mt-1">Comprehensive navigation platform with public transport, walking, and driving directions worldwide.</p>
+                                    
+                                    <div class="flex items-center mt-3 text-sm">
+                                        <span class="text-neutral-400">https://wego.here.com</span>
+                                        <div class="ml-auto flex space-x-2">
+                                            <button class="text-neutral-400 hover:text-primary transition-colors" title="Vote Up">
+                                                <i class="fa fa-thumbs-up"></i>
+                                                <span class="ml-1">298</span>
+                                            </button>
+                                            <button class="text-neutral-400 hover:text-primary transition-colors comment-btn" title="Add Comment">
+                                                <i class="fa fa-comment"></i>
+                                                <span class="ml-1">52</span>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- MapQuest -->
+                    <div class="bg-white rounded-xl overflow-hidden card-shadow site-card-hover">
+                        <div class="p-5">
+                            <div class="flex items-start">
+                                <div class="flex-shrink-0 mr-4">
+                                    <a href="https://www.mapquest.com" target="_blank" class="block">
+                                        <div class="w-12 h-12 rounded-lg bg-orange-500 flex items-center justify-center animate-bounce-medium">
+                                            <i class="fa fa-compass text-white text-xl"></i>
+                                        </div>
+                                    </a>
+                                </div>
+                                
+                                <div class="flex-grow">
+                                    <div class="flex justify-between items-start">
+                                        <h3 class="font-semibold text-lg">
+                                            <a href="https://www.mapquest.com" target="_blank" class="hover:text-primary">MapQuest</a>
+                                        </h3>
+                                        <div class="flex items-center text-yellow-400 text-sm">
+                                            <i class="fa fa-star"></i>
+                                            <span class="ml-1 text-neutral-600">4.4</span>
+                                        </div>
+                                    </div>
+                                    
+                                    <p class="text-neutral-500 text-sm mt-1">Classic mapping service offering directions, traffic updates, and location-based services.</p>
+                                    
+                                    <div class="flex items-center mt-3 text-sm">
+                                        <span class="text-neutral-400">https://www.mapquest.com</span>
+                                        <div class="ml-auto flex space-x-2">
+                                            <button class="text-neutral-400 hover:text-primary transition-colors" title="Vote Up">
+                                                <i class="fa fa-thumbs-up"></i>
+                                                <span class="ml-1">245</span>
+                                            </button>
+                                            <button class="text-neutral-400 hover:text-primary transition-colors comment-btn" title="Add Comment">
+                                                <i class="fa fa-comment"></i>
+                                                <span class="ml-1">38</span>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- JavaScript for Smooth Scrolling and Category Navigation -->
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // 获取所有分类按钮
+        const categoryButtons = document.querySelectorAll('.category-btn');
+        
+        // 为每个分类按钮添加点击事件
+        categoryButtons.forEach(button => {
+            button.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                // 获取按钮对应的分类
+                const category = this.getAttribute('data-category');
+                
+                // 更新按钮状态
+                updateButtonStates(this);
+                
+                // 平滑滚动到对应区域
+                if (category === 'all') {
+                    // 如果是"All"按钮，滚动到页面顶部
+                    window.scrollTo({
+                        top: 0,
+                        behavior: 'smooth'
+                    });
+                } else {
+                    // 滚动到对应的分类区域
+                    const targetSection = document.getElementById(category);
+                    if (targetSection) {
+                        // 计算目标位置，考虑固定头部的高度
+                        const headerHeight = document.querySelector('.sticky-top').offsetHeight;
+                        const categoryContainerHeight = document.querySelector('.search-category-container').offsetHeight;
+                        const totalOffset = headerHeight + categoryContainerHeight + 20; // 额外20px间距
+                        
+                        const targetPosition = targetSection.offsetTop - totalOffset;
+                        
+                        window.scrollTo({
+                            top: targetPosition,
+                            behavior: 'smooth'
+                        });
+                    }
+                }
+            });
+        });
+        
+        // 更新按钮状态的函数
+        function updateButtonStates(activeButton) {
+            // 移除所有按钮的激活状态
+            categoryButtons.forEach(btn => {
+                btn.classList.remove('bg-primary', 'text-white');
+                btn.classList.add('bg-white', 'text-neutral-700');
+            });
+            
+            // 为当前点击的按钮添加激活状态
+            activeButton.classList.remove('bg-white', 'text-neutral-700');
+            activeButton.classList.add('bg-primary', 'text-white');
+        }
+        
+        // 监听滚动事件，实现滚动时自动高亮当前分类
+        let scrollTimeout;
+        window.addEventListener('scroll', function() {
+            clearTimeout(scrollTimeout);
+            scrollTimeout = setTimeout(function() {
+                highlightCurrentCategory();
+            }, 100);
+        });
+        
+        // 高亮当前分类的函数
+        function highlightCurrentCategory() {
+            const categorySections = document.querySelectorAll('.category-section');
+            const headerHeight = document.querySelector('.sticky-top').offsetHeight;
+            const categoryContainerHeight = document.querySelector('.search-category-container').offsetHeight;
+            const totalOffset = headerHeight + categoryContainerHeight + 50; // 额外50px缓冲
+            
+            const scrollPosition = window.scrollY + totalOffset;
+            
+            let currentCategory = 'all';
+            
+            categorySections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionBottom = sectionTop + section.offsetHeight;
+                
+                if (scrollPosition >= sectionTop && scrollPosition < sectionBottom) {
+                    currentCategory = section.getAttribute('data-category');
+                }
+            });
+            
+            // 更新按钮状态
+            categoryButtons.forEach(btn => {
+                const btnCategory = btn.getAttribute('data-category');
+                if (btnCategory === currentCategory) {
+                    btn.classList.remove('bg-white', 'text-neutral-700');
+                    btn.classList.add('bg-primary', 'text-white');
+                } else {
+                    btn.classList.remove('bg-primary', 'text-white');
+                    btn.classList.add('bg-white', 'text-neutral-700');
+                }
+            });
+        }
+        
+        // 初始化时高亮当前分类
+        highlightCurrentCategory();
+    });
+
+    // Google 登录集成
+    const GOOGLE_CLIENT_ID = 'Wangleejoe272@gmail.com'; // 用你的Google OAuth客户端ID替换
+
+    function handleGoogleLoginResponse(response) {
+        // response.credential 是JWT，可以发给后端验证
+        // 这里只做简单展示
+        const data = parseJwt(response.credential);
+        // 隐藏登录弹窗
+        document.getElementById('loginModal').classList.add('hidden');
+        // 显示用户头像和昵称
+        showUserInfo(data);
+    }
+
+    // 解析JWT
+    function parseJwt(token) {
+        const base64Url = token.split('.')[1];
+        const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+        const jsonPayload = decodeURIComponent(atob(base64).split('').map(function(c) {
+            return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+        }).join(''));
+        return JSON.parse(jsonPayload);
+    }
+
+    // 显示用户信息（头像和昵称）
+    function showUserInfo(data) {
+        let userInfoBar = document.getElementById('userInfoBar');
+        if (!userInfoBar) {
+            userInfoBar = document.createElement('div');
+            userInfoBar.id = 'userInfoBar';
+            userInfoBar.className = 'flex items-center space-x-3 ml-4';
+            // 插入到header右侧导航栏
+            const nav = document.querySelector('nav.md\\:flex');
+            if (nav) {
+                nav.appendChild(userInfoBar);
+            }
+        }
+        userInfoBar.innerHTML = `
+            <img src="${data.picture || 'https://www.gravatar.com/avatar?d=mp'}" alt="avatar" class="w-8 h-8 rounded-full border border-neutral-300">
+            <span class="text-neutral-700 font-medium">${data.name || data.email}</span>
+        `;
+        // 隐藏登录按钮
+        document.querySelectorAll('#loginButton, #mobileLoginButton').forEach(btn => btn.classList.add('hidden'));
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+        // 替换原有Google按钮点击事件
+        document.querySelectorAll('.fa-google').forEach(function(btn){
+            btn.closest('button').addEventListener('click', function(e){
+                e.preventDefault();
+                google.accounts.id.initialize({
+                    client_id: GOOGLE_CLIENT_ID,
+                    callback: handleGoogleLoginResponse
+                });
+                google.accounts.id.prompt(); // 弹出Google登录
+            });
+        });
+    });
+    </script>
+</body>
+</html>
+                    
